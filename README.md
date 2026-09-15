@@ -156,6 +156,7 @@ titles taken from the first real sentence, and the app says so on the book card.
 every chapter and module is stored exactly as extracted and can be read in the app behind
 "show the text from the book".
 
+<<<<<<< HEAD
 ## 8a. Pictures inside the book
 
 A textbook explains as much with its screenshots as with its sentences, so the pictures are
@@ -201,6 +202,11 @@ never been opened its explanation is written first, so the quiz has something to
 Anything the model returns that does not share its subject with that passage is dropped, and
 the template bank fills the gap, so a paper is always ten questions whether or not Ollama is
 running.
+=======
+## 9. How the quizzes work
+
+Every quiz is ten questions: seven multiple choice, then three long business questions.
+>>>>>>> origin/main
 
 
 `backend/quizzes/generator.py` holds nineteen question templates covering SUM and AutoSum,
@@ -322,6 +328,7 @@ python manage.py shell < checks_download.py       # the whole book download
 python manage.py shell < checks_uploaded_book.py  # what the student sees of an upload
 python manage.py shell < checks_question_sets.py  # five sets, handed out in turn
 python manage.py shell < checks_rubrics.py        # rubric terms and rubric-scored progress
+<<<<<<< HEAD
 python checks_book_images.py                      # pictures out of a book and onto a section
 ```
 
@@ -331,6 +338,10 @@ upload takes, prints which chapter or module every picture landed on, then uploa
 through the API and checks the chapter comes back with an address the app can load. Ollama is
 not needed for it.
 
+=======
+```
+
+>>>>>>> origin/main
 Run those on a fresh database, straight after `seed_demo`.
 
 The main smoke test signs in as both roles, joins a course by code, reads a chapter and a module, starts a
@@ -348,10 +359,15 @@ backend/
   accounts/          user model with FACULTY and STUDENT roles, JWT auth, permissions
   courses/           courses, enrolments, books, chapters, modules
     extraction.py    readers for pdf, docx, pptx, txt and the chapter/module splitters
+<<<<<<< HEAD
     figures.py       pulling the pictures out of a book and matching them to a section
     figure_store.py  saving those pictures and having the model caption them
     generate.py      building a book from slides, images or topic names
     explain.py       Ollama client, figure captions, and the built in fallback writer
+=======
+    generate.py      building a book from slides, images or topic names
+    explain.py       Ollama client and the built in fallback writer
+>>>>>>> origin/main
     management/commands/seed_demo.py, check_ollama.py
   quizzes/           attempts, per question storage
     generator.py     nineteen multiple choice templates
@@ -384,6 +400,7 @@ a picture of a page rather than text. Run it through OCR first, or upload the Wo
 
 If explanations look thin, check `python manage.py check_ollama`. A thin explanation with
 Ollama down is the fallback writer doing its best with the extracted text.
+<<<<<<< HEAD
 
 ## 5c. Where the local model is used
 
@@ -416,3 +433,5 @@ bank fills the gap. The three business questions always come from the template b
 those are marked against a number the platform worked out itself and a model's arithmetic is
 not something to stake a mark on.
 
+=======
+>>>>>>> origin/main

@@ -48,6 +48,7 @@ function Explanation({ text }) {
   );
 }
 
+<<<<<<< HEAD
 // Pictures that came out of the uploaded book itself, shown under the explanation for
 // the section they were printed in. A textbook explains as much with its screenshots as
 // with its sentences, so they belong beside the reading rather than behind a link.
@@ -77,6 +78,8 @@ function Figures({ images }) {
   );
 }
 
+=======
+>>>>>>> origin/main
 export default function ContentScreen({ route, navigation }) {
   const { kind, id, title } = route.params;
   const { user } = useAuth();
@@ -136,7 +139,10 @@ export default function ContentScreen({ route, navigation }) {
 
           <Surface>
             <Explanation text={data.explanation} />
+<<<<<<< HEAD
             <Figures images={data.images} />
+=======
+>>>>>>> origin/main
           </Surface>
 
           {resources.length ? (
@@ -258,6 +264,7 @@ const styles = StyleSheet.create({
   toggle: { paddingVertical: spacing(1.5) },
   toggleText: { color: colors.accent, fontWeight: '600', fontSize: 14 },
   sectionHeading: { fontSize: 16.5, fontWeight: '700', color: colors.ink, marginBottom: 8 },
+<<<<<<< HEAD
   figures: { marginTop: spacing(2) },
   figure: { marginBottom: spacing(2) },
   figureImage: {
@@ -270,6 +277,8 @@ const styles = StyleSheet.create({
   },
   figureLabel: { fontFamily: mono, fontSize: 11.5, color: colors.accent, marginTop: 6 },
   figureCaption: { fontSize: 13.5, color: colors.inkSoft, lineHeight: 20, marginTop: 3 },
+=======
+>>>>>>> origin/main
   resource: { marginBottom: 14 },
   resourceTitle: { fontSize: 14.5, fontWeight: '600', color: colors.ink },
   resourceCaption: { fontSize: 13, color: colors.muted, marginTop: 2, lineHeight: 19 },

@@ -127,7 +127,11 @@ class Command(BaseCommand):
                 handle.write(SAMPLE_BOOK)
                 path = handle.name
             try:
+<<<<<<< HEAD
                 result = extract(path, "sample_excel_book.txt", use_model=False)
+=======
+                result = extract(path, "sample_excel_book.txt")
+>>>>>>> origin/main
             finally:
                 os.unlink(path)
             book = Book.objects.create(

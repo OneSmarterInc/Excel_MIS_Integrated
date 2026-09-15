@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 from django.db import models
 from rest_framework import serializers
 
@@ -20,6 +21,11 @@ class BookImageSerializer(serializers.ModelSerializer):
             return ""
         request = self.context.get("request")
         return request.build_absolute_uri(obj.file.url) if request else obj.file.url
+=======
+from rest_framework import serializers
+
+from .models import Book, Chapter, Course, Enrollment, Invitation, Module
+>>>>>>> origin/main
 
 
 class ModuleBriefSerializer(serializers.ModelSerializer):
@@ -51,13 +57,17 @@ class ChapterDetailSerializer(serializers.ModelSerializer):
     book_title = serializers.CharField(source="book.title", read_only=True)
     book_id = serializers.IntegerField(source="book.id", read_only=True)
     course_id = serializers.IntegerField(source="book.course_id", read_only=True)
+<<<<<<< HEAD
     images = serializers.SerializerMethodField()
+=======
+>>>>>>> origin/main
 
     class Meta:
         model = Chapter
         fields = [
             "id", "number", "title", "raw_text", "explanation", "status",
             "review_comment", "published_at", "explained_at", "book_title",
+<<<<<<< HEAD
             "book_id", "course_id", "modules", "images",
         ]
 
@@ -72,18 +82,30 @@ class ChapterDetailSerializer(serializers.ModelSerializer):
         ).distinct()
         return BookImageSerializer(images, many=True, context=self.context).data
 
+=======
+            "book_id", "course_id", "modules",
+        ]
+
+>>>>>>> origin/main
 
 class ModuleDetailSerializer(serializers.ModelSerializer):
     chapter_number = serializers.IntegerField(source="chapter.number", read_only=True)
     chapter_title = serializers.CharField(source="chapter.title", read_only=True)
     course_id = serializers.IntegerField(source="chapter.book.course_id", read_only=True)
+<<<<<<< HEAD
     images = BookImageSerializer(many=True, read_only=True)
+=======
+>>>>>>> origin/main
 
     class Meta:
         model = Module
         fields = [
             "id", "number", "title", "raw_text", "explanation", "explained_at",
+<<<<<<< HEAD
             "chapter_number", "chapter_title", "course_id", "images",
+=======
+            "chapter_number", "chapter_title", "course_id",
+>>>>>>> origin/main
         ]
 
 

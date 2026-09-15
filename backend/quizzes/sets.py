@@ -12,7 +12,10 @@ import random
 
 from django.utils import timezone
 
+<<<<<<< HEAD
 from .ai_questions import questions_from_text
+=======
+>>>>>>> origin/main
 from .business import BUSINESS_PER_QUIZ, BUSINESS_TEMPLATES, generate_business_questions
 from .generator import (
     QUESTIONS_PER_QUIZ,
@@ -30,6 +33,7 @@ def _target_filter(chapter=None, module=None) -> dict:
     return {"module": module, "chapter": None} if module else {"chapter": chapter, "module": None}
 
 
+<<<<<<< HEAD
 def build_paper_from(templates, business_templates, seed: int, context: str,
                      written: list[dict] | None = None) -> list[dict]:
     """One paper: the model's questions about this section first, then the template bank.
@@ -48,6 +52,16 @@ def build_paper_from(templates, business_templates, seed: int, context: str,
             question = templates[position - 1](rng)
             question["kind"] = "MCQ"
         question["order"] = position
+=======
+def build_paper_from(templates, business_templates, seed: int, context: str) -> list[dict]:
+    """One paper: the given skills, in the given order, with fresh figures."""
+    rng = random.Random(seed)
+    questions = []
+    for position, template in enumerate(templates, start=1):
+        question = template(rng)
+        question["order"] = position
+        question["kind"] = "MCQ"
+>>>>>>> origin/main
         question["context"] = context
         questions.append(question)
     for offset, template in enumerate(business_templates):
@@ -104,6 +118,7 @@ def build_sets(chapter=None, module=None, context: str = "", source_text: str = 
         if number in have:
             made.append(have[number])
             continue
+<<<<<<< HEAD
         # Each set gets its own questions from the model, written from the same passage, so
         # the five stay about the section and still differ from one another.
         written = questions_from_text(
@@ -114,6 +129,11 @@ def build_sets(chapter=None, module=None, context: str = "", source_text: str = 
         for question in build_paper_from(skills, business_skills,
                                          seed=picker.randrange(1, 10_000_000), context=context,
                                          written=written):
+=======
+        question_set = QuestionSet.objects.create(number=number, **where)
+        for question in build_paper_from(skills, business_skills,
+                                         seed=picker.randrange(1, 10_000_000), context=context):
+>>>>>>> origin/main
             business = question["kind"] == "BUSINESS"
             SetQuestion.objects.create(
                 question_set=question_set,

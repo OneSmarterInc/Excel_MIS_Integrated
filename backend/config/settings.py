@@ -108,6 +108,7 @@ OLLAMA_MODEL = os.environ.get("OLLAMA_MODEL", "llama3.1:8b")
 OLLAMA_TIMEOUT = int(os.environ.get("OLLAMA_TIMEOUT", "180"))
 # Set to "0" to skip Ollama entirely and always use the built in writer.
 USE_OLLAMA = os.environ.get("USE_OLLAMA", "1") == "1"
+<<<<<<< HEAD
 
 # Pictures found inside an uploaded book are stored and shown beside the explanation for
 # the section they came from. Set to "0" to go back to text only uploads.
@@ -121,3 +122,5 @@ OLLAMA_CAPTION_TIMEOUT = int(os.environ.get("OLLAMA_CAPTION_TIMEOUT", "90"))
 # How many figures in one section get a written caption on a single visit. The rest keep
 # the plain caption until the next time the section is opened.
 CAPTIONS_PER_VISIT = int(os.environ.get("CAPTIONS_PER_VISIT", "6"))
+=======
+>>>>>>> origin/main

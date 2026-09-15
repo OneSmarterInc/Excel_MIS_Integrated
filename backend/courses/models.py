@@ -295,6 +295,7 @@ class Evaluation(models.Model):
     @property
     def possible(self):
         return sum(float(item.get("points", 0) or 0) for item in self.scores)
+<<<<<<< HEAD
 
 
 class BookImage(models.Model):
@@ -333,3 +334,5 @@ class BookImage(models.Model):
     @property
     def label(self):
         return f"Figure from page {self.page}" if self.page else "Figure from the book"
+=======
+>>>>>>> origin/main

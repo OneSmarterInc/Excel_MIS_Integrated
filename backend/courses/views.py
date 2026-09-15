@@ -16,7 +16,10 @@ from accounts.permissions import IsFaculty, IsStudent
 
 from .explain import build_explanation, ollama_status
 from .extraction import detect_kind, extract
+<<<<<<< HEAD
 from .figure_store import collect_figures, describe_pending, save_figures, store_figures
+=======
+>>>>>>> origin/main
 from .generate import build_book, gather, read_source
 from .models import Approval, Book, Chapter, Course, Enrollment, Invitation, Module
 from .serializers import (
@@ -135,16 +138,26 @@ class BookUploadView(APIView):
                 scratch.write(chunk)
             scratch_path = scratch.name
         try:
+<<<<<<< HEAD
             result = extract(scratch_path, upload.name, course_hint=course.name)
+=======
+            result = extract(scratch_path, upload.name)
+>>>>>>> origin/main
         except Exception as exc:
             os.unlink(scratch_path)
             return Response(
                 {"detail": f"The file could not be read: {exc}"},
                 status=status.HTTP_400_BAD_REQUEST,
             )
+<<<<<<< HEAD
 
         if not result["chapters"]:
             os.unlink(scratch_path)
+=======
+        os.unlink(scratch_path)
+
+        if not result["chapters"]:
+>>>>>>> origin/main
             return Response(
                 {"detail": "No readable text was found. A scanned image PDF needs OCR first."},
                 status=status.HTTP_400_BAD_REQUEST,
@@ -157,6 +170,7 @@ class BookUploadView(APIView):
             character_count=result["character_count"],
         )
         store_chapters(book, result["chapters"])
+<<<<<<< HEAD
 
         # The same file is read a second time for its pictures, which is why the scratch
         # copy is only removed now. A book with no figures in it, or a reader that cannot
@@ -167,6 +181,8 @@ class BookUploadView(APIView):
             note = f"{book.extraction_note} {pictures} pictures were taken from the file."
             book.extraction_note = note.strip()[:250]
             book.save(update_fields=["extraction_note"])
+=======
+>>>>>>> origin/main
         return Response(BookSerializer(book, context={"request": request}).data,
                         status=status.HTTP_201_CREATED)
 
@@ -214,7 +230,11 @@ class BookGenerateView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
+<<<<<<< HEAD
         sources, names, figures = [], [], []
+=======
+        sources, names = [], []
+>>>>>>> origin/main
         for upload in uploads:
             suffix = os.path.splitext(upload.name)[1] or ".txt"
             with tempfile.NamedTemporaryFile(delete=False, suffix=suffix) as scratch:
@@ -224,9 +244,12 @@ class BookGenerateView(APIView):
             try:
                 sources.append(read_source(scratch_path, upload.name))
                 names.append(upload.name)
+<<<<<<< HEAD
                 # Slides carry their screenshots with them, so the pictures are taken here
                 # while the scratch copy still exists and saved once the book is written.
                 figures.extend(collect_figures(scratch_path, detect_kind(upload.name)))
+=======
+>>>>>>> origin/main
             except Exception:
                 pass
             finally:
@@ -261,7 +284,10 @@ class BookGenerateView(APIView):
             character_count=result["character_count"],
         )
         store_chapters(book, result["chapters"])
+<<<<<<< HEAD
         save_figures(book, figures)
+=======
+>>>>>>> origin/main
         return Response(BookSerializer(book, context={"request": request}).data,
                         status=status.HTTP_201_CREATED)
 
@@ -283,10 +309,14 @@ def _explain(request, obj, kind, serializer_class):
         obj.explanation = build_explanation(obj.title, obj.raw_text, kind)
         obj.explained_at = timezone.now()
         obj.save(update_fields=["explanation", "explained_at"])
+<<<<<<< HEAD
     # Any picture in this section that has not been described yet is captioned now, with
     # the explanation above it for context. A few at a time, so the page still opens.
     describe_pending(obj, kind)
     return Response(serializer_class(obj, context={"request": request}).data)
+=======
+    return Response(serializer_class(obj).data)
+>>>>>>> origin/main
 
 
 class ChapterView(APIView):
