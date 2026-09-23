@@ -1,0 +1,14 @@
+{
+  "expo": {
+    "name": "MIS 3000 Excel",
+    "slug": "mis3000-excel",
+    "version": "1.0.0",
+    "orientation": "default",
+    "userInterfaceStyle": "light",
+    "splash": { "resizeMode": "contain", "backgroundColor": "#14263B" },
+    "assetBundlePatterns": ["**/*"],
+    "ios": { "supportsTablet": true },
+    "android": { "adaptiveIcon": { "backgroundColor": "#14263B" } },
+    "web": { "bundler": "metro" }
+  }
+}
