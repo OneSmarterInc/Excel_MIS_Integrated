@@ -418,6 +418,10 @@ def ollama_explanation(title: str, text: str, kind: str) -> str | None:
 
 
 def build_explanation(title: str, text: str, kind: str = "chapter") -> str:
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     """The model writes it. The built in writer is only there for when it cannot.
 
     A local model occasionally returns a stub on the first pass, so it gets a second ask
@@ -515,3 +519,9 @@ def figure_caption(section_title: str, explanation: str, context: str,
     )
     answer = _ollama_chat(model, system, prompt)
     return _tidy_caption(answer) if answer else None
+<<<<<<< HEAD
+=======
+=======
+    return ollama_explanation(title, text, kind) or local_explanation(title, text, kind)
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a

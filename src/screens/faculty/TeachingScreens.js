@@ -3,11 +3,7 @@ import * as DocumentPicker from 'expo-document-picker';
 import React, { useCallback, useState } from 'react';
 import { Platform, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
-<<<<<<< HEAD
 import api, { API_HOST, downloadDocument, readError } from '../../api/client';
-=======
-import api, { API_HOST, readError } from '../../api/client';
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 import { Button, ConfirmDialog, Empty, Field, Loading, Notice, Surface }
   from '../../components/ui';
 import { colors, mono, radius, spacing, type } from '../../theme';
@@ -49,7 +45,6 @@ export function ChapterWorkshop({ route, navigation }) {
   const [demos, setDemos] = useState([]);
   const [target, setTarget] = useState(null);
   const [splitAt, setSplitAt] = useState('');
-<<<<<<< HEAD
   const [splitTitle, setSplitTitle] = useState('');
   const [demoTitle, setDemoTitle] = useState('');
   const [demoSummary, setDemoSummary] = useState('');
@@ -57,10 +52,6 @@ export function ChapterWorkshop({ route, navigation }) {
     { order: 1, title: '', instruction: '', cell: '', formula: '' },
   ]);
   const [expandedDemo, setExpandedDemo] = useState(null);
-=======
-  const [demoTitle, setDemoTitle] = useState('');
-  const [demoSteps, setDemoSteps] = useState('');
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [busy, setBusy] = useState(false);
@@ -136,7 +127,6 @@ export function ChapterWorkshop({ route, navigation }) {
     );
   };
 
-<<<<<<< HEAD
   const updateStep = (index, field, val) => {
     setStructuredSteps((prev) =>
       prev.map((item, i) => (i === index ? { ...item, [field]: val } : item))
@@ -173,43 +163,20 @@ export function ChapterWorkshop({ route, navigation }) {
 
     if (!demoTitle.trim() || validSteps.length === 0) {
       setError('Give the walkthrough a title and at least one step with instructions.');
-=======
-  const addDemonstration = async () => {
-    const steps = demoSteps
-      .split('\n')
-      .map((line) => line.trim())
-      .filter(Boolean)
-      .map((line) => {
-        const [head, ...rest] = line.split(':');
-        return rest.length
-          ? { title: head.trim(), instruction: rest.join(':').trim() }
-          : { instruction: line };
-      });
-    if (!demoTitle.trim() || steps.length === 0) {
-      setError('Give the walkthrough a title and at least one step.');
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
       return;
     }
     await run(
       () => api.post('/demonstrations/', {
         [target ? 'module' : 'chapter']: target || id,
         title: demoTitle.trim(),
-<<<<<<< HEAD
         summary: demoSummary.trim(),
         steps: validSteps,
-=======
-        steps,
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
       }),
       'Walkthrough saved.'
     );
     setDemoTitle('');
-<<<<<<< HEAD
     setDemoSummary('');
     setStructuredSteps([{ order: 1, title: '', instruction: '', cell: '', formula: '' }]);
-=======
-    setDemoSteps('');
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   };
 
   if (!chapter) return <Loading label="Loading the chapter" />;
@@ -292,7 +259,6 @@ export function ChapterWorkshop({ route, navigation }) {
           </Pressable>
         ))}
 
-<<<<<<< HEAD
         <View style={{ marginTop: 16, paddingTop: 14, borderTopWidth: 1, borderTopColor: colors.grid }}>
           <Text style={[type.heading, { fontSize: 14, marginBottom: 4 }]}>Split Chapter in Two</Text>
           <Text style={[type.small, { marginBottom: 8 }]}>
@@ -330,26 +296,6 @@ export function ChapterWorkshop({ route, navigation }) {
               },
               'Chapter split successfully into two ordered chapters.'
             )}
-=======
-        <View style={styles.splitRow}>
-          <TextInput
-            value={splitAt}
-            onChangeText={setSplitAt}
-            placeholder="Split before module number"
-            placeholderTextColor={colors.muted}
-            keyboardType="number-pad"
-            style={styles.smallInput}
-          />
-          <Button
-            tone="quiet"
-            label="Split chapter"
-            disabled={busy || !splitAt}
-            onPress={() => run(
-              () => api.post(`/chapters/${id}/split/`, { at_module_number: Number(splitAt) }),
-              'Chapter split in two.'
-            )}
-            style={{ flex: 1 }}
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
           />
         </View>
       </Surface>
@@ -382,7 +328,6 @@ export function ChapterWorkshop({ route, navigation }) {
       </Surface>
 
       <Surface>
-<<<<<<< HEAD
         <Text style={type.heading}>Step-by-Step Walkthroughs &amp; Demonstrations</Text>
         <Text style={[type.small, { marginBottom: 12 }]}>
           Build an interactive, clear worked demonstration. Each step can include detailed instructions, target Excel cells, and formulas.
@@ -501,39 +446,6 @@ export function ChapterWorkshop({ route, navigation }) {
           onPress={addDemonstration}
           disabled={busy || !demoTitle.trim()}
         />
-=======
-        <Text style={type.heading}>Step by step demonstration</Text>
-        <Text style={[type.small, { marginBottom: 8 }]}>
-          One step per line. Put a colon after a short step title if you want one.
-        </Text>
-        {demos.map((demo) => (
-          <View key={demo.id} style={styles.listRow}>
-            <View style={{ flex: 1 }}>
-              <Text style={styles.listTitle}>{demo.title}</Text>
-              <Text style={type.small}>{demo.step_count} steps</Text>
-            </View>
-            <Pressable onPress={() => setPending({
-              what: demo.title,
-              note: `All ${demo.step_count} steps go with it.`,
-              work: () => api.delete(`/demonstrations/${demo.id}/`),
-              done: 'Walkthrough removed.',
-            })}>
-              <Text style={styles.remove}>Remove</Text>
-            </Pressable>
-          </View>
-        ))}
-        <Field label="Walkthrough title" value={demoTitle} onChangeText={setDemoTitle}
-               placeholder="Totalling a column the way I do it in class" />
-        <TextInput
-          value={demoSteps}
-          onChangeText={setDemoSteps}
-          multiline
-          style={styles.editor}
-          placeholder={'Select the column: click B2 and drag to B6\nPress AutoSum: Home tab, Editing group'}
-          placeholderTextColor={colors.muted}
-        />
-        <Button label="Save walkthrough" onPress={addDemonstration} disabled={busy} />
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
       </Surface>
 
       <Surface>
@@ -560,7 +472,6 @@ export function ChapterWorkshop({ route, navigation }) {
         />
         <Button
           tone="quiet"
-<<<<<<< HEAD
           label="Download this chapter (PDF)"
           onPress={() => run(async () => {
             const courseCode = chapter.book_title || 'Course';
@@ -572,16 +483,6 @@ export function ChapterWorkshop({ route, navigation }) {
         />
         <Text style={styles.hint}>
           The PDF also opens in your browser at {API_HOST}/api/chapters/{id}/download/
-=======
-          label="Download this chapter"
-          onPress={() => run(async () => {
-            const { data } = await api.get(`/chapters/${id}/download/`);
-            setMessage(`Downloaded ${String(data).length} characters.`);
-          }, 'Chapter downloaded.')}
-        />
-        <Text style={styles.hint}>
-          On the web the file also opens at {API_HOST}/api/chapters/{id}/download/
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
         </Text>
       </Surface>
     </ScrollView>

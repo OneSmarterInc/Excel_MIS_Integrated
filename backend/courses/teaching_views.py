@@ -210,6 +210,7 @@ def split_chapter(request, pk):
 
     moving = [module for module in modules if module.number >= at]
     book = chapter.book
+<<<<<<< HEAD
 
     # Shift all later chapters up by 1 to make room right after this chapter
     for later in book.chapters.filter(number__gt=chapter.number).order_by("-number"):
@@ -221,12 +222,20 @@ def split_chapter(request, pk):
         book=book,
         number=chapter.number + 1,
         title=new_title,
+=======
+    new_number = (book.chapters.aggregate(top=Max("number"))["top"] or 0) + 1
+    fresh = Chapter.objects.create(
+        book=book,
+        number=new_number,
+        title=request.data.get("title") or f"{chapter.title} (continued)",
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
         raw_text="\n\n".join(module.raw_text for module in moving),
     )
     for position, module in enumerate(moving, start=1):
         module.chapter = fresh
         module.number = position
         module.save(update_fields=["chapter", "number"])
+<<<<<<< HEAD
 
     kept_modules = [module for module in modules if module.number < at]
     for position, module in enumerate(kept_modules, start=1):
@@ -248,6 +257,14 @@ def split_chapter(request, pk):
         f"Chapter '{chapter.title}' was split. Created Chapter {fresh.number}: '{fresh.title}'.",
         kind=Notification.Kind.SYSTEM,
     )
+=======
+    chapter.raw_text = "\n\n".join(
+        module.raw_text for module in modules if module.number < at
+    )
+    chapter.explanation = ""
+    chapter.save(update_fields=["raw_text", "explanation"])
+    reopen(chapter, "The instructor split this chapter.")
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     return Response({
         "kept": ChapterDetailSerializer(chapter).data,
         "created": ChapterDetailSerializer(fresh).data,
@@ -270,6 +287,7 @@ def submit_chapter(request, pk):
     chapter.modules.update(status=Approval.UNDER_REVIEW)
     ReviewNote.objects.create(chapter=chapter, author=request.user, action="SUBMITTED",
                               comment=request.data.get("comment", "")[:1000])
+<<<<<<< HEAD
 
     from accounts.models import User
     for admin_user in User.objects.filter(role=User.Role.ADMIN):
@@ -281,6 +299,8 @@ def submit_chapter(request, pk):
             sender=request.user,
         )
 
+=======
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     return Response({"id": chapter.id, "status": chapter.status})
 
 
@@ -300,6 +320,7 @@ def publish_chapter(request, pk):
     chapter.save(update_fields=["status", "published_at"])
     chapter.modules.update(status=Approval.PUBLISHED)
     ReviewNote.objects.create(chapter=chapter, author=request.user, action="PUBLISHED")
+<<<<<<< HEAD
 
     course = chapter.book.course
     for enrollment in course.enrollments.select_related("student"):
@@ -311,6 +332,8 @@ def publish_chapter(request, pk):
             sender=request.user,
         )
 
+=======
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     return Response({"id": chapter.id, "status": chapter.status,
                      "published_at": chapter.published_at})
 
@@ -692,10 +715,17 @@ def chapter_markdown(chapter) -> str:
     return "\n".join(lines).strip() + "\n"
 
 
+<<<<<<< HEAD
 def as_pdf_download(pdf_bytes: bytes, filename: str):
     from django.http import HttpResponse
 
     response = HttpResponse(pdf_bytes, content_type="application/pdf")
+=======
+def as_download(text: str, filename: str):
+    from django.http import HttpResponse
+
+    response = HttpResponse(text, content_type="text/markdown; charset=utf-8")
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     response["Content-Disposition"] = f'attachment; filename="{filename}"'
     return response
 
@@ -703,12 +733,17 @@ def as_pdf_download(pdf_bytes: bytes, filename: str):
 @api_view(["GET"])
 def download_chapter(request, pk):
     try:
+<<<<<<< HEAD
         chapter = Chapter.objects.select_related("book__course__faculty").get(pk=pk)
+=======
+        chapter = Chapter.objects.select_related("book__course").get(pk=pk)
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     except Chapter.DoesNotExist:
         return Response({"detail": "Chapter not found."}, status=404)
     course = chapter.book.course
     if not can_read_course(request.user, course):
         return Response({"detail": "You do not have access to this chapter."}, status=403)
+<<<<<<< HEAD
     if request.user.is_student and chapter.status != Approval.PUBLISHED:
         return Response({"detail": "This chapter has not been published yet."}, status=403)
 
@@ -735,13 +770,23 @@ def download_module(request, pk):
     pdf = generate_module_pdf(module)
     name = f"{course.code}_module_{chapter.number}_{module.number}.pdf"
     return as_pdf_download(pdf, name)
+=======
+    name = f"{course.code}_chapter_{chapter.number}.md"
+    return as_download(chapter_markdown(chapter), name)
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 
 
 @api_view(["GET"])
 def download_book(request, pk):
+<<<<<<< HEAD
     """The whole book in one PDF, chapters in order."""
     try:
         book = Book.objects.select_related("course__faculty").get(pk=pk)
+=======
+    """The whole book in one file, chapters in order."""
+    try:
+        book = Book.objects.select_related("course").get(pk=pk)
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     except Book.DoesNotExist:
         return Response({"detail": "Book not found."}, status=404)
     course = book.course
@@ -750,9 +795,18 @@ def download_book(request, pk):
 
     if request.user.is_student:
         return Response(
+<<<<<<< HEAD
             {"detail": "Downloading the full book is for the course instructor."}, status=403
         )
 
     from .pdf_generator import generate_book_pdf
     pdf = generate_book_pdf(book)
     return as_pdf_download(pdf, f"{course.code}_{book.id}_book.pdf")
+=======
+            {"detail": "Downloading the book is for the course instructor."}, status=403
+        )
+    chapters = book.chapters.all()
+    parts = [f"# {book.title}", f"{course.code} — {course.name}", ""]
+    parts += [chapter_markdown(chapter) for chapter in chapters]
+    return as_download("\n\n".join(parts), f"{course.code}_{book.id}_book.md")
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a

@@ -3,11 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, TextInput, View } from 'react-native';
 
 import api, { readError } from '../../api/client';
-<<<<<<< HEAD
 import { Button, ConfirmDialog, Empty, Loading, Notice, Stat, Surface } from '../../components/ui';
-=======
-import { Button, Empty, Loading, Notice, Stat, Surface } from '../../components/ui';
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 import { colors, mono, radius, spacing, type } from '../../theme';
 
 const STATUS_LABEL = {
@@ -251,12 +247,9 @@ export function AdminCourses({ navigation }) {
   const [courses, setCourses] = useState(null);
   const [books, setBooks] = useState([]);
   const [error, setError] = useState('');
-<<<<<<< HEAD
   const [message, setMessage] = useState('');
   const [pendingDelete, setPendingDelete] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 
   const load = useCallback(async () => {
     try {
@@ -276,7 +269,6 @@ export function AdminCourses({ navigation }) {
   useFocusEffect(useCallback(() => { load(); }, [load]));
   if (!courses) return <Loading label="Loading courses" />;
 
-<<<<<<< HEAD
   const removeCourse = async (course) => {
     setDeletingId(course.id);
     setError('');
@@ -294,15 +286,12 @@ export function AdminCourses({ navigation }) {
     }
   };
 
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   return (
     <ScrollView style={{ backgroundColor: colors.canvas }} contentContainerStyle={styles.page}>
       <Text style={type.title}>Courses and books</Text>
       <Text style={[type.small, { marginBottom: spacing(2) }]}>
         Every course on the platform, and what each book turned into.
       </Text>
-<<<<<<< HEAD
       <Notice text={message} tone="good" />
       <Notice text={error} tone="error" />
 
@@ -321,10 +310,6 @@ export function AdminCourses({ navigation }) {
         onConfirm={() => removeCourse(pendingDelete)}
       />
 
-=======
-      <Notice text={error} tone="error" />
-
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
       {courses.map((course) => (
         <Surface key={course.id}>
           <View style={styles.head}>
@@ -335,7 +320,6 @@ export function AdminCourses({ navigation }) {
           <Text style={type.small}>
             {course.instructor} · {course.books} books · {course.chapters} chapters
           </Text>
-<<<<<<< HEAD
           <Pressable
             onPress={() => setPendingDelete(course)}
             disabled={deletingId === course.id}
@@ -345,8 +329,6 @@ export function AdminCourses({ navigation }) {
               {deletingId === course.id ? 'Deleting\u2026' : 'Delete course'}
             </Text>
           </Pressable>
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
         </Surface>
       ))}
 
@@ -690,11 +672,8 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
   },
   statRow: { flexDirection: 'row', flexWrap: 'wrap', marginBottom: spacing(1.5) },
-<<<<<<< HEAD
   deleteRow: { marginTop: 10, alignSelf: 'flex-start' },
   deleteText: { color: colors.red, fontWeight: '600', fontSize: 13 },
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   head: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   code: {
     fontFamily: mono,

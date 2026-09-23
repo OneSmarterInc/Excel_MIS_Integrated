@@ -346,6 +346,10 @@ def split_document(blocks: list[dict]) -> tuple[list[dict], str]:
     return chapters, note
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 def extract(path: str, filename: str, course_hint: str = "", use_model: bool = True) -> dict:
     """Read the file and work out its chapters and modules.
 
@@ -361,6 +365,15 @@ def extract(path: str, filename: str, course_hint: str = "", use_model: bool = T
         chapters, note = split_with_model(blocks, course_hint)
     else:
         chapters, note = split_document(blocks)
+<<<<<<< HEAD
+=======
+=======
+def extract(path: str, filename: str) -> dict:
+    kind = detect_kind(filename)
+    blocks = READERS[kind](path)
+    chapters, note = split_document(blocks)
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     characters = sum(len(b["text"]) for b in blocks)
     return {"kind": kind, "chapters": chapters, "note": note, "character_count": characters}
 

@@ -74,16 +74,9 @@ export async function downloadDocument(path, filename) {
         : `The server refused the download (${response.status}).`
     );
   }
-<<<<<<< HEAD
   const blob = await response.blob();
 
   if (Platform.OS === 'web') {
-=======
-  const text = await response.text();
-
-  if (Platform.OS === 'web') {
-    const blob = new Blob([text], { type: 'text/markdown;charset=utf-8' });
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
     link.href = url;
@@ -92,18 +85,13 @@ export async function downloadDocument(path, filename) {
     link.click();
     link.remove();
     URL.revokeObjectURL(url);
-<<<<<<< HEAD
     return { saved: filename, size: blob.size };
-=======
-    return { saved: filename, characters: text.length };
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   }
 
   try {
     // eslint-disable-next-line global-require
     const FileSystem = require('expo-file-system');
     const uri = `${FileSystem.documentDirectory}${filename}`;
-<<<<<<< HEAD
     const fr = new FileReader();
     const base64 = await new Promise((resolve, reject) => {
       fr.onload = () => {
@@ -119,12 +107,6 @@ export async function downloadDocument(path, filename) {
     return { saved: uri, size: blob.size };
   } catch (error) {
     return { saved: '', size: blob.size };
-=======
-    await FileSystem.writeAsStringAsync(uri, text);
-    return { saved: uri, characters: text.length };
-  } catch (error) {
-    return { saved: '', characters: text.length };
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   }
 }
 

@@ -204,7 +204,11 @@ def review_queue(request):
 def review_chapter(request, pk):
     """Approve, ask for changes, or send it back as a draft, always with a comment."""
     try:
+<<<<<<< HEAD
         chapter = Chapter.objects.select_related("book__course__faculty").get(pk=pk)
+=======
+        chapter = Chapter.objects.select_related("book__course").get(pk=pk)
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     except Chapter.DoesNotExist:
         return Response({"detail": "Chapter not found."}, status=404)
 
@@ -234,6 +238,7 @@ def review_chapter(request, pk):
     chapter.modules.update(status=mapping[decision])
     ReviewNote.objects.create(chapter=chapter, author=request.user,
                               action=decision.upper(), comment=comment)
+<<<<<<< HEAD
 
     from .models import Notification, notify
     notify(
@@ -296,6 +301,11 @@ def approve_all(request):
     })
 
 
+=======
+    return Response(ChapterReviewSerializer(chapter).data)
+
+
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 @api_view(["GET"])
 @permission_classes(ADMIN)
 def analytics(request):

@@ -3,11 +3,7 @@ import React, { useCallback, useState } from 'react';
 import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import api, { readError } from '../../api/client';
-<<<<<<< HEAD
 import { Button, ConfirmDialog, Empty, Field, Loading, Notice, Surface } from '../../components/ui';
-=======
-import { Button, Empty, Field, Loading, Notice, Surface } from '../../components/ui';
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 import { colors, mono, spacing, type } from '../../theme';
 
 export default function FacultyCourses({ navigation }) {
@@ -21,11 +17,8 @@ export default function FacultyCourses({ navigation }) {
   const [error, setError] = useState('');
   const [message, setMessage] = useState('');
   const [busy, setBusy] = useState(false);
-<<<<<<< HEAD
   const [pendingDelete, setPendingDelete] = useState(null);
   const [deletingId, setDeletingId] = useState(null);
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 
   const load = useCallback(async () => {
     try {
@@ -46,7 +39,6 @@ export default function FacultyCourses({ navigation }) {
 
   const update = (key) => (value) => setForm((prev) => ({ ...prev, [key]: value }));
 
-<<<<<<< HEAD
   const removeCourse = async (course) => {
     setDeletingId(course.id);
     setError('');
@@ -64,8 +56,6 @@ export default function FacultyCourses({ navigation }) {
     }
   };
 
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   const create = async () => {
     setBusy(true);
     setError('');
@@ -104,7 +94,6 @@ export default function FacultyCourses({ navigation }) {
       <Notice text={message} tone="good" />
       <Notice text={error} tone="error" />
 
-<<<<<<< HEAD
       <ConfirmDialog
         visible={!!pendingDelete}
         title="Delete course?"
@@ -120,8 +109,6 @@ export default function FacultyCourses({ navigation }) {
         onConfirm={() => removeCourse(pendingDelete)}
       />
 
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
       {asking ? (
         <Surface>
           <Text style={type.heading}>Do you already have the content?</Text>
@@ -225,7 +212,6 @@ export default function FacultyCourses({ navigation }) {
                 {course.student_count} enrolled  ·  {course.book_count} book
                 {course.book_count === 1 ? '' : 's'}
               </Text>
-<<<<<<< HEAD
               <Pressable
                 onPress={(event) => {
                   event.stopPropagation?.();
@@ -238,8 +224,6 @@ export default function FacultyCourses({ navigation }) {
                   {deletingId === course.id ? 'Deleting\u2026' : 'Delete course'}
                 </Text>
               </Pressable>
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
             </Surface>
           </Pressable>
         ))
@@ -270,11 +254,8 @@ const styles = StyleSheet.create({
   open: { color: colors.accent, fontWeight: '600', fontSize: 13 },
   name: { fontSize: 17, fontWeight: '600', color: colors.ink, marginTop: 10 },
   meta: { fontSize: 13, color: colors.muted, marginTop: 8 },
-<<<<<<< HEAD
   deleteRow: { marginTop: 10, alignSelf: 'flex-start' },
   deleteText: { color: colors.red, fontWeight: '600', fontSize: 13 },
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   pathTag: {
     fontSize: 12.5,
     color: colors.accent,

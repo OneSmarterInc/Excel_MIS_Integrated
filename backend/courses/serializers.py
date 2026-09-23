@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 from django.db import models
 from rest_framework import serializers
 
@@ -20,6 +24,14 @@ class BookImageSerializer(serializers.ModelSerializer):
             return ""
         request = self.context.get("request")
         return request.build_absolute_uri(obj.file.url) if request else obj.file.url
+<<<<<<< HEAD
+=======
+=======
+from rest_framework import serializers
+
+from .models import Book, Chapter, Course, Enrollment, Invitation, Module
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 
 
 class ModuleBriefSerializer(serializers.ModelSerializer):
@@ -51,13 +63,24 @@ class ChapterDetailSerializer(serializers.ModelSerializer):
     book_title = serializers.CharField(source="book.title", read_only=True)
     book_id = serializers.IntegerField(source="book.id", read_only=True)
     course_id = serializers.IntegerField(source="book.course_id", read_only=True)
+<<<<<<< HEAD
     images = serializers.SerializerMethodField()
+=======
+<<<<<<< HEAD
+    images = serializers.SerializerMethodField()
+=======
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 
     class Meta:
         model = Chapter
         fields = [
             "id", "number", "title", "raw_text", "explanation", "status",
             "review_comment", "published_at", "explained_at", "book_title",
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
             "book_id", "course_id", "modules", "images",
         ]
 
@@ -72,18 +95,41 @@ class ChapterDetailSerializer(serializers.ModelSerializer):
         ).distinct()
         return BookImageSerializer(images, many=True, context=self.context).data
 
+<<<<<<< HEAD
+=======
+=======
+            "book_id", "course_id", "modules",
+        ]
+
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 
 class ModuleDetailSerializer(serializers.ModelSerializer):
     chapter_number = serializers.IntegerField(source="chapter.number", read_only=True)
     chapter_title = serializers.CharField(source="chapter.title", read_only=True)
     course_id = serializers.IntegerField(source="chapter.book.course_id", read_only=True)
+<<<<<<< HEAD
     images = BookImageSerializer(many=True, read_only=True)
+=======
+<<<<<<< HEAD
+    images = BookImageSerializer(many=True, read_only=True)
+=======
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 
     class Meta:
         model = Module
         fields = [
             "id", "number", "title", "raw_text", "explanation", "explained_at",
+<<<<<<< HEAD
             "chapter_number", "chapter_title", "course_id", "images",
+=======
+<<<<<<< HEAD
+            "chapter_number", "chapter_title", "course_id", "images",
+=======
+            "chapter_number", "chapter_title", "course_id",
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
         ]
 
 

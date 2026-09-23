@@ -295,6 +295,10 @@ class Evaluation(models.Model):
     @property
     def possible(self):
         return sum(float(item.get("points", 0) or 0) for item in self.scores)
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 
 
 class BookImage(models.Model):
@@ -333,6 +337,7 @@ class BookImage(models.Model):
     @property
     def label(self):
         return f"Figure from page {self.page}" if self.page else "Figure from the book"
+<<<<<<< HEAD
 
 
 class Notification(models.Model):
@@ -380,3 +385,7 @@ def notify(recipient, title: str, message: str, kind: str = Notification.Kind.SY
         kind=kind,
         link_path=link_path,
     )
+=======
+=======
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a

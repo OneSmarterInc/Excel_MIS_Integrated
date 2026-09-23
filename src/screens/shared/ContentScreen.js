@@ -1,11 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 
-<<<<<<< HEAD
 import api, { downloadDocument, readError } from '../../api/client';
-=======
-import api, { readError } from '../../api/client';
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 import { Button, Loading, Notice, Surface } from '../../components/ui';
 import { useAuth } from '../../store/auth';
 import { colors, mono, spacing, type } from '../../theme';
@@ -52,10 +48,6 @@ function Explanation({ text }) {
   );
 }
 
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 // Pictures that came out of the uploaded book itself, shown under the explanation for
 // the section they were printed in. A textbook explains as much with its screenshots as
 // with its sentences, so they belong beside the reading rather than behind a link.
@@ -85,11 +77,6 @@ function Figures({ images }) {
   );
 }
 
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/main
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 export default function ContentScreen({ route, navigation }) {
   const { kind, id, title } = route.params;
   const { user } = useAuth();
@@ -99,7 +86,6 @@ export default function ContentScreen({ route, navigation }) {
   const [error, setError] = useState('');
   const [showSource, setShowSource] = useState(false);
   const [busy, setBusy] = useState(false);
-<<<<<<< HEAD
   const [downloading, setDownloading] = useState(false);
 
   const handleDownload = async () => {
@@ -119,8 +105,6 @@ export default function ContentScreen({ route, navigation }) {
       setDownloading(false);
     }
   };
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 
   const load = useCallback(
     async (refresh = false) => {
@@ -171,14 +155,7 @@ export default function ContentScreen({ route, navigation }) {
 
           <Surface>
             <Explanation text={data.explanation} />
-<<<<<<< HEAD
             <Figures images={data.images} />
-=======
-<<<<<<< HEAD
-            <Figures images={data.images} />
-=======
->>>>>>> origin/main
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
           </Surface>
 
           {resources.length ? (
@@ -266,7 +243,6 @@ export default function ContentScreen({ route, navigation }) {
           )}
           <Button
             tone="quiet"
-<<<<<<< HEAD
             label={downloading ? 'Preparing PDF...' : 'Download this section as PDF'}
             disabled={downloading}
             onPress={handleDownload}
@@ -274,8 +250,6 @@ export default function ContentScreen({ route, navigation }) {
           />
           <Button
             tone="quiet"
-=======
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
             label={busy ? 'Rewriting' : 'Rewrite the explanation'}
             disabled={busy}
             onPress={() => load(true)}
@@ -310,10 +284,6 @@ const styles = StyleSheet.create({
   toggle: { paddingVertical: spacing(1.5) },
   toggleText: { color: colors.accent, fontWeight: '600', fontSize: 14 },
   sectionHeading: { fontSize: 16.5, fontWeight: '700', color: colors.ink, marginBottom: 8 },
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   figures: { marginTop: spacing(2) },
   figure: { marginBottom: spacing(2) },
   figureImage: {
@@ -326,11 +296,6 @@ const styles = StyleSheet.create({
   },
   figureLabel: { fontFamily: mono, fontSize: 11.5, color: colors.accent, marginTop: 6 },
   figureCaption: { fontSize: 13.5, color: colors.inkSoft, lineHeight: 20, marginTop: 3 },
-<<<<<<< HEAD
-=======
-=======
->>>>>>> origin/main
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
   resource: { marginBottom: 14 },
   resourceTitle: { fontSize: 14.5, fontWeight: '600', color: colors.ink },
   resourceCaption: { fontSize: 13, color: colors.muted, marginTop: 2, lineHeight: 19 },

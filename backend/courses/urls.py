@@ -11,7 +11,10 @@ urlpatterns = [
     path("chapters/<int:pk>/download/", teaching_views.download_chapter),
     path("chapters/merge/", teaching_views.merge_chapters),
     path("modules/<int:pk>/edit/", teaching_views.edit_module),
+<<<<<<< HEAD
     path("modules/<int:pk>/download/", teaching_views.download_module),
+=======
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
     path("books/<int:pk>/reorder/", teaching_views.reorder_chapters),
     path("books/<int:pk>/download/", teaching_views.download_book),
 

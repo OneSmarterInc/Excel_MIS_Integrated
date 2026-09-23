@@ -319,19 +319,11 @@ export default function FacultyCourseDetail({ route, navigation }) {
                       <Pressable
                         onPress={() => download(
                           `/chapters/${chapter.id}/download/`,
-<<<<<<< HEAD
                           `${course.code}_chapter_${chapter.number}.pdf`,
                           `Chapter ${chapter.number}`
                         )}
                       >
                         <Text style={styles.action}>Download this chapter (PDF)</Text>
-=======
-                          `${course.code}_chapter_${chapter.number}.md`,
-                          `Chapter ${chapter.number}`
-                        )}
-                      >
-                        <Text style={styles.action}>Download this chapter</Text>
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
                       </Pressable>
                       <Pressable
                         onPress={() =>
@@ -364,7 +356,6 @@ export default function FacultyCourseDetail({ route, navigation }) {
                                 {module.title}
                               </Text>
                             </Pressable>
-<<<<<<< HEAD
                             <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12, flexWrap: 'wrap' }}>
                               <Pressable
                                 onPress={() =>
@@ -393,21 +384,6 @@ export default function FacultyCourseDetail({ route, navigation }) {
                                 </Text>
                               </Pressable>
                             </View>
-=======
-                            <Pressable
-                              onPress={() =>
-                                navigation.navigate('QuizPreview', {
-                                  kind: 'module',
-                                  id: module.id,
-                                  title: `Module ${chapter.number}.${module.number}: ${module.title}`,
-                                })
-                              }
-                            >
-                              <Text style={styles.moduleSets}>
-                                Question sets for this module
-                              </Text>
-                            </Pressable>
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
                           </View>
                         </View>
                       ))}
@@ -421,22 +397,13 @@ export default function FacultyCourseDetail({ route, navigation }) {
               tone="quiet"
               label={
                 downloading
-<<<<<<< HEAD
                   ? 'Building PDF file...'
                   : `Download the whole book as PDF (${book.chapter_count} chapters, ${book.module_count} modules)`
-=======
-                  ? 'Building the file'
-                  : `Download the whole book (${book.chapter_count} chapters, ${book.module_count} modules)`
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
               }
               disabled={!!downloading}
               onPress={() => download(
                 `/books/${book.id}/download/`,
-<<<<<<< HEAD
                 `${course.code}_${book.id}_book.pdf`,
-=======
-                `${course.code}_${book.id}_book.md`,
->>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
                 'The whole book'
               )}
               style={{ marginTop: spacing(1.5) }}

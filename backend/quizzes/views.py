@@ -8,7 +8,14 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from accounts.permissions import IsFaculty, IsStudent
+<<<<<<< HEAD
 from courses.explain import build_explanation
+=======
+<<<<<<< HEAD
+from courses.explain import build_explanation
+=======
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 from courses.models import Approval, Chapter, Module
 from courses.views import can_read_course, percentage_of
 
@@ -87,6 +94,10 @@ class AttemptSerializer(serializers.ModelSerializer):
         ]
 
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 def study_text(obj, kind: str) -> str:
     """The passage the quiz is written from: the explanation the student was just given.
 
@@ -108,6 +119,11 @@ def study_text(obj, kind: str) -> str:
     return f"{obj.title}\n{obj.raw_text}"[:6000]
 
 
+<<<<<<< HEAD
+=======
+=======
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
 def _resolve_target(request):
     chapter_id = request.data.get("chapter_id") or request.query_params.get("chapter_id")
     module_id = request.data.get("module_id") or request.query_params.get("module_id")
@@ -120,7 +136,15 @@ def _resolve_target(request):
             "scope": Attempt.Scope.MODULE, "module": module, "chapter": module.chapter,
             "course": module.chapter.book.course,
             "context": f"{module.chapter.title} / {module.title}",
+<<<<<<< HEAD
             "source_text": study_text(module, "module"),
+=======
+<<<<<<< HEAD
+            "source_text": study_text(module, "module"),
+=======
+            "source_text": f"{module.title}\n{module.raw_text}"[:6000],
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
         }, None
     if chapter_id:
         try:
@@ -130,7 +154,15 @@ def _resolve_target(request):
         return {
             "scope": Attempt.Scope.CHAPTER, "module": None, "chapter": chapter,
             "course": chapter.book.course, "context": chapter.title,
+<<<<<<< HEAD
             "source_text": study_text(chapter, "chapter"),
+=======
+<<<<<<< HEAD
+            "source_text": study_text(chapter, "chapter"),
+=======
+            "source_text": f"{chapter.title}\n{chapter.raw_text}"[:6000],
+>>>>>>> origin/main
+>>>>>>> 93b7e4dae038f4c3f883e22ae5a0f0900a8e697a
         }, None
     return None, Response({"detail": "Send a chapter_id or a module_id."}, status=400)
 
